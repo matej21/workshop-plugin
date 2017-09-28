@@ -92,4 +92,14 @@ class PresenterUtils
                 .withSuperParent(2, methodReferencePattern);
     }
 
+    @Nullable
+    static String destinationToPresenter(String destination)
+    {
+        destination = destination.startsWith(":") ? destination.substring(1) : destination;
+        if (!destination.contains(":")) {
+            return null;
+        }
+        return destination.substring(0, destination.lastIndexOf(":"));
+    }
+
 }

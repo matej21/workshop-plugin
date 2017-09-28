@@ -16,14 +16,12 @@ public class PresenterNameReferenceProvider extends PsiReferenceProvider
     {
         assert psiElement instanceof StringLiteralExpression;
         String presenterName = ((StringLiteralExpression) psiElement).getContents();
-        if (!presenterName.contains(":")) {
+        presenterName = PresenterUtils.destinationToPresenter(presenterName);
+        if (presenterName == null) {
             return new PsiReference[0];
         }
-        presenterName = presenterName.substring(0, presenterName.lastIndexOf(":"));
         String presenterClassName = PresenterMapper.presenterNameToClass(presenterName);
-        if (presenterClassName == null) {
-            return new PsiReference[0];
-        }
+
         return new PsiReference[]{new PresenterNameReference(psiElement, presenterClassName)};
     }
 
