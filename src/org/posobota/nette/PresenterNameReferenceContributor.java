@@ -12,7 +12,7 @@ public class PresenterNameReferenceContributor extends PsiReferenceContributor
     @Override
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar psiReferenceRegistrar)
     {
-        psiReferenceRegistrar.registerReferenceProvider(PlatformPatterns.psiElement(StringLiteralExpression.class), new PresenterNameReferenceProvider());
+        psiReferenceRegistrar.registerReferenceProvider(PlatformPatterns.psiElement().and(PresenterUtils.getPresenterNamePattern()), new PresenterNameReferenceProvider());
     }
 
 }
