@@ -23,6 +23,7 @@
 
 	<extensions defaultExtensionNs="com.intellij">
 		<completion.contributor implementationClass="org.posobota.nette.PresenterNameCompletionContributor" language="PHP"/>
+		<psi.referenceContributor implementation="org.posobota.nette.PresenterNameReferenceContributor" language="PHP"/>
 		<!-- Add your extensions here -->
 	</extensions>
 	<extensions defaultExtensionNs="com.jetbrains.php">
