@@ -3,9 +3,12 @@ package org.posobota.nette;
 import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.codeInsight.completion.CompletionProvider;
 import com.intellij.codeInsight.completion.CompletionResultSet;
+import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.openapi.util.Pair;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.ProcessingContext;
+import com.jetbrains.php.PhpIcons;
 import com.jetbrains.php.PhpIndex;
 import com.jetbrains.php.lang.psi.elements.PhpClass;
 import org.jetbrains.annotations.NotNull;
@@ -27,11 +30,21 @@ public class PresenterNameCompletionProvider extends CompletionProvider<Completi
         }
         PhpClass presenter = presenters.iterator().next();
 
-        PhpClass[] foundPresenters = index.getAllClassNames(completionResultSet.getPrefixMatcher())
+        index.getAllClassNames(completionResultSet.getPrefixMatcher())
                 .stream()
                 .flatMap(s -> index.getClassesByName(s).stream())
                 .filter(cls -> presenter.getType().isConvertibleFrom(cls.getType(), index))
-                .toArray(PhpClass[]::new);
+                .forEach(cls -> {
+                    String presenterName = PresenterMapper.classToPresenterName(cls.getFQN());
+                    if (presenterName == null) {
+                        return;
+                    }
+                    completionResultSet.addElement(LookupElementBuilder.create(":" + presenterName + ":")
+                            .withLookupString(presenterName.contains(":") ? presenterName.substring(presenterName.lastIndexOf(":") + 1) : presenterName)
+                            .withPresentableText(presenterName)
+                            .withTypeText(cls.getType().toStringResolved(), PhpIcons.CLASS, false)
+                    );
+                });
     }
 
 }
