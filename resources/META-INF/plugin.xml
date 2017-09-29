@@ -25,9 +25,18 @@
 		<completion.contributor implementationClass="org.posobota.nette.PresenterNameCompletionContributor" language="PHP"/>
 		<psi.referenceContributor implementation="org.posobota.nette.PresenterNameReferenceContributor" language="PHP"/>
 		<referencesSearch implementation="org.posobota.nette.PresenterNameReferenceSearcher"/>
+		<localInspection language="PHP"
+						 implementationClass="org.posobota.nette.PresenterNameInspection"
+						 shortName="NettePresenterName"
+						 id="NettePresenterName"
+						 displayName="Nette Presenter name references existing class"
+						 groupName="Nette"
+						 level="WARNING"
+		/>
 		<!-- Add your extensions here -->
 	</extensions>
 	<extensions defaultExtensionNs="com.jetbrains.php">
+
 	</extensions>
 
 	<actions>
